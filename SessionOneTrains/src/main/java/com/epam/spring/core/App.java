@@ -51,8 +51,8 @@ public class App {
 		
 		
 		App app = (App) ctx.getBean("app");
-		app.logEvent("some event for user 1");
 		app.logEvent("some event for user 2");
+		app.logEvent("some event for user 1");
 		
 		
 	}
