@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.epam.beans.Client;
+import com.epam.beans.Event;
 import com.epam.loggers.impl.ConsoleEventLogger;
 import com.epam.loggers.EventLogger;
 
@@ -43,7 +44,11 @@ public class App {
 		String message = msg.replaceAll(client.getId(),
 				client.getFullName());
 		
-		//eventLogger.logEvent(message);
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		Event event = (Event) ctx.getBean("event");
+		event.setMsg(message);
+		
+		eventLogger.logEvent(event);
 	}
 	
 	public static void main(String[] args) {
