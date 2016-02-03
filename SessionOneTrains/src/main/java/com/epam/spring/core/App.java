@@ -1,5 +1,8 @@
 package com.epam.spring.core;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.epam.beans.Client;
 import com.epam.loggers.impl.ConsoleEventLogger;
 import com.epam.loggers.EventLogger;
@@ -44,8 +47,13 @@ public class App {
 	}
 	
 	public static void main(String[] args) {
-		App app = new App();
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		
+		
+		App app = (App) ctx.getBean("app");
 		app.logEvent("some event for user 1");
+		app.logEvent("some event for user 2");
+		
 		
 	}
 }
