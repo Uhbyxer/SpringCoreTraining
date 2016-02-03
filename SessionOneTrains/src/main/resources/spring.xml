@@ -23,6 +23,11 @@
 	
 	</bean>
 
+	<bean id="fileEventLogger" class="com.epam.loggers.impl.CacheFileEventLogger" 
+		init-method="init" destroy-method="destroy">
+	
+	</bean>
+
 	<bean id="app" class="com.epam.spring.core.App">
 		<constructor-arg ref="client"/>
 		<constructor-arg ref="eventLogger"/>

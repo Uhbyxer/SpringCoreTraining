@@ -1,6 +1,7 @@
 package com.epam.spring.core;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.epam.beans.Client;
@@ -52,12 +53,15 @@ public class App {
 	}
 	
 	public static void main(String[] args) {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		//ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
 		
+		ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
 		
 		App app = (App) ctx.getBean("app");
 		app.logEvent("some event for user 2");
 		app.logEvent("some event for user 1");
+		
+		ctx.close();
 		
 		
 	}
