@@ -1,0 +1,5 @@
+/SessionOneTrains/*.project
+/SessionOneTrains/.settings/*
+/SessionOneTrains/bin/*
+/SessionOneTrains/target/*
+/SessionOneTrains/*.classpath
