@@ -1,18 +1,23 @@
 package com.epam.spring.core;
 
+import java.util.Map;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.epam.beans.Client;
 import com.epam.beans.Event;
+import com.epam.beans.EventType;
 import com.epam.loggers.impl.ConsoleEventLogger;
 import com.epam.loggers.EventLogger;
 
 public class App {
 	private Client client;
 		
-	private EventLogger eventLogger;
+	private EventLogger eventLogger = new ConsoleEventLogger();
+	
+	private Map<EventType, EventLogger> loggers;
 
 	public Client getClient() {
 		return client;
@@ -36,12 +41,21 @@ public class App {
 	}
 	
 	
-	public App(Client client, EventLogger eventLogger) {
+	public App(Client client, Map<EventType, EventLogger> loggers) {
 		this.client = client;
-		this.eventLogger = eventLogger;
+		//this.eventLogger = eventLogger;
+		
+		this.loggers = loggers;
+		
 	}
 
-	public void logEvent(String msg) {
+	public void logEvent(EventType type, String msg) {
+		EventLogger logger = loggers.get(type);
+		if(logger == null)
+			logger = eventLogger;
+		
+		
+		
 		String message = msg.replaceAll(client.getId(),
 				client.getFullName());
 		
@@ -49,7 +63,11 @@ public class App {
 		Event event = (Event) ctx.getBean("event");
 		event.setMsg(message);
 		
-		eventLogger.logEvent(event);
+		logger.logEvent(event);
+		
+		
+	
+		
 	}
 	
 	public static void main(String[] args) {
@@ -58,8 +76,13 @@ public class App {
 		ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
 		
 		App app = (App) ctx.getBean("app");
-		app.logEvent("some event for user 2");
-		app.logEvent("some event for user 1");
+		 
+		if(app == null) {
+			System.out.println("app == null");
+		}
+		
+		app.logEvent(EventType.ERROR , "ERROR: some event for user 2");
+		app.logEvent(EventType.INFO, "INFO: some event for user 1");
 		
 		ctx.close();
 		

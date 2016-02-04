@@ -13,9 +13,7 @@ public class FileEventLogger implements EventLogger{
 
 	@Override
 	public void logEvent(Event event) {
-		
-		
-		
+		System.out.println("Fake writing 2 file -> " + event);
 	}
 	
 	
@@ -24,11 +22,22 @@ public class FileEventLogger implements EventLogger{
 		
 		this.file = new File(fileName);
 		
-		if(!file.canWrite()) 
-			throw new IOException("Can't write 2 file: " + fileName);
+		if(!file.canWrite()) { 
+			//throw new IOException("Can't write 2 file: " + fileName);
+			System.out.println("(fake) Can't write 2 file: " + fileName);
+			
+		}	
 	}
 	
 	
+	public void destroy() {
+		
+	}
+
+
+	public FileEventLogger(String fileName) {
+		this.fileName = fileName;
+	}
 	
 	
 }
