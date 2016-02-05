@@ -1,5 +1,6 @@
 package com.epam.spring.core;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
@@ -83,6 +84,13 @@ public class App {
 		
 		app.logEvent(EventType.ERROR , "ERROR: some event for user 2");
 		app.logEvent(EventType.INFO, "INFO: some event for user 1");
+		
+		
+		Event ev = new Event(new Date(), java.text.DateFormat.getDateTimeInstance());
+		ev.setMsg("Custom logger message");
+		
+		app.eventLogger.logEvent(ev);
+		
 		
 		ctx.close();
 		

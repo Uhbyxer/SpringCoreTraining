@@ -55,6 +55,9 @@
 				<entry key="ERROR" value-ref="combinedEventLogger" />
 			</map>
 		</constructor-arg>
+		
+		<property name="eventLogger"  value="#{T(com.epam.beans.Event).idDay() ? consoleEventLogger : fileEventLogger}" />
+		
 	</bean>
 	
 	<context:annotation-config/>

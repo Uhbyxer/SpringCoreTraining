@@ -3,6 +3,7 @@ package com.epam.beans;
 import java.text.DateFormat;
 import java.text.FieldPosition;
 import java.text.ParsePosition;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
@@ -52,6 +53,36 @@ public class Event {
 		return "Event [id=" + id + ", msg=" + msg + ", date=" + df.format(date) + "]";
 	}
 	
+	public static boolean idDay() {
+		Date testDate = new Date();
+		return !(testDate .before(START_DATE) || testDate.after(AFTER_DATE));
+	}
 	
+	public static final Date START_DATE;
+	
+	public static final Date AFTER_DATE;
+	
+	static {
+        Calendar from = Calendar.getInstance();
+        from.set(Calendar.HOUR_OF_DAY,9);
+        from.set(Calendar.MINUTE,0);
+        from.set(Calendar.SECOND,0);
+        from.set(Calendar.MILLISECOND,0);
+		START_DATE = from.getTime();
+		
+        Calendar to = Calendar.getInstance();
+        to.set(Calendar.HOUR_OF_DAY,18);
+        to.set(Calendar.MINUTE,0);
+        to.set(Calendar.SECOND,0);
+        to.set(Calendar.MILLISECOND,0);
+
+		AFTER_DATE = to.getTime();
+		
+		System.out.println("start date: " + START_DATE);
+		System.out.println("end date: " + AFTER_DATE);
+		
+		System.out.println("Is day: " + idDay());
+		
+	}
 
 }
