@@ -3,10 +3,12 @@ package com.epam.spring.core;
 import java.util.Date;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.epam.aspects.StatisticsAspect;
 import com.epam.beans.Client;
 import com.epam.beans.Event;
 import com.epam.beans.EventType;
@@ -15,7 +17,14 @@ import com.epam.loggers.EventLogger;
 
 public class App {
 	private Client client;
-		
+	
+	private StatisticsAspect sa;
+	
+	
+	public void setSa(StatisticsAspect sa) {
+		this.sa = sa;
+	}
+
 	private EventLogger eventLogger = new ConsoleEventLogger();
 	
 	private Map<EventType, EventLogger> loggers;
@@ -89,7 +98,12 @@ public class App {
 		Event ev = new Event(new Date(), java.text.DateFormat.getDateTimeInstance());
 		ev.setMsg("Custom logger message");
 		
-		app.eventLogger.logEvent(ev);
+		if(app.eventLogger != null)
+			app.eventLogger.logEvent(ev);
+		
+		
+		
+		//System.out.println(app.sa.getCounter());
 		
 		
 		ctx.close();

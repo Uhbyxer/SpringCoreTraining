@@ -5,6 +5,7 @@
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	
 	xsi:schemaLocation="
  		http://www.springframework.org/schema/beans
@@ -13,7 +14,13 @@
  		http://www.springframework.org/schema/context/spring-context-4.2.xsd
  		http://www.springframework.org/schema/util
  		http://www.springframework.org/schema/util/spring-util-4.2.xsd 		
+ 		http://www.springframework.org/schema/aop
+ 		http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+ 		
  		">
+
+	<context:annotation-config/>
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
 
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -45,6 +52,9 @@
 
 	<import resource="loggers.xml"/>
 	
+	<bean id = "stat" class="com.epam.aspects.StatisticsAspect">
+	</bean>		
+		
 	<bean id="app" class="com.epam.spring.core.App">
 		<constructor-arg ref="client" />
 		
@@ -57,9 +67,13 @@
 		</constructor-arg>
 		
 		<property name="eventLogger"  value="#{T(com.epam.beans.Event).idDay() ? consoleEventLogger : fileEventLogger}" />
-		
+		<property name="sa" ref="stat" />
+	
 	</bean>
 	
-	<context:annotation-config/>
+
+	
+	<context:component-scan base-package="com.epam.*"/>
+	
 
 </beans>

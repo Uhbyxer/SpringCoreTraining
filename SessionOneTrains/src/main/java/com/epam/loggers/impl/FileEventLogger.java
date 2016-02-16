@@ -14,6 +14,8 @@ public class FileEventLogger implements EventLogger{
 	@Override
 	public void logEvent(Event event) {
 		System.out.println("Fake writing 2 file -> " + event);
+		
+		//throw new RuntimeException("hohoho");
 	}
 	
 	
